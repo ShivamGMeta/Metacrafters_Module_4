@@ -1,4 +1,8 @@
 # METACRAFTERS-ETH-AVAX-MODULE-4
+
+Transaction Hash: 0x08a309Bb97F5b8AFD2a8970c62569615638A838B
+SnowTrace Link: https://testnet.snowtrace.io/address/0x08a309Bb97F5b8AFD2a8970c62569615638A838B
+
 # Introduction
 Create a ERC20 token and deploy it on the Avalanche network for Degen Gaming. The smart contract should have the following functionality:
 
