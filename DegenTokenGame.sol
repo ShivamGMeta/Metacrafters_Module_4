@@ -10,17 +10,22 @@ contract DegenGamingToken {
 
     mapping(address => uint256) private balances;
     mapping(address => mapping(address => uint256)) private allowances;
-    mapping(address => bool) private isAdmin;
     mapping(address => uint256) private rewards;
-    // like a watch on spending limit by current owner 
+
+    struct Item {
+        string name;
+        uint256 cost;
+    }
+
+    Item[] public items;
+    mapping(address => mapping(uint256 => uint256)) public playerItems; // player address => item ID => quantity
 
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
-    event RewardAdded(address indexed admin, uint256 amount);
     event RewardClaimed(address indexed player, uint256 amount);
+    event ItemRedeemed(address indexed player, uint256 itemId, uint256 quantity);
+    event ShieldRewardClaimed(address indexed player, uint256 quantity);
 
-    //  it creates a log entry on the blockchain.
-    // help to track when and where token is used by an external user 
 
     constructor() {
         name = "Degen Token";
@@ -28,6 +33,10 @@ contract DegenGamingToken {
         decimals = 18;
         totalSupply = 0;
         owner = msg.sender;
+
+        // Adding sample items
+        items.push(Item("Sword", 100));
+        items.push(Item("Shield", 150));
     }
 
     modifier onlyOwner() {
@@ -100,20 +109,57 @@ contract DegenGamingToken {
     require(amount > 0, "No rewards to claim");
 
     rewards[msg.sender] = 0;
+
+    // Give the player a shield (item ID 1)
+    uint256 shieldItemId = 1;
+    playerItems[msg.sender][shieldItemId] += 1; // Increase the quantity of shields
+
     emit RewardClaimed(msg.sender, amount);
+    emit ShieldRewardClaimed(msg.sender, 1); // Log the shield reward
 
     return amount;
 }
 
+
     function InGamePurchase(uint256 amount) external {
-    require(amount > 0, "Invalid amount");
-    require(amount <= balances[msg.sender], "Insufficient balance");
-    
+        require(amount > 0, "Invalid amount");
+        require(amount <= balances[msg.sender], "Insufficient balance");
 
-    balances[msg.sender] -= amount;
-    totalSupply -= amount;
+        balances[msg.sender] -= amount;
+        totalSupply -= amount;
 
-    emit Transfer(msg.sender, address(0), amount);
-}
+        emit Transfer(msg.sender, address(0), amount);
+    }
 
+    function redeemItem(uint256 itemId, uint256 quantity) external {
+        require(itemId < items.length, "Invalid item ID");
+        require(quantity > 0, "Invalid quantity");
+
+        uint256 totalCost = items[itemId].cost * quantity;
+        require(totalCost <= balances[msg.sender], "Insufficient balance");
+
+        balances[msg.sender] -= totalCost;
+        totalSupply -= totalCost;
+        
+        playerItems[msg.sender][itemId] += quantity;  // Update the player's item inventory
+
+        emit Transfer(msg.sender, address(0), totalCost);
+        emit ItemRedeemed(msg.sender, itemId, quantity);
+    }
+
+    function getPlayerItemQuantity(address player, uint256 itemId) external view returns (uint256) {
+        return playerItems[player][itemId];
+    }
+
+    function getPlayerItems(address player) external view returns (Item[] memory, uint256[] memory) {
+        uint256 itemCount = items.length;
+        uint256[] memory quantities = new uint256[](itemCount);
+
+        for (uint256 i = 0; i < itemCount; i++) {
+            quantities[i] = playerItems[player][i];
+        }
+        
+
+        return (items, quantities);
+    }
 }
