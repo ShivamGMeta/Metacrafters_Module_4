@@ -1,7 +1,7 @@
 # METACRAFTERS-ETH-AVAX-MODULE-4
 
-- Transaction Hash: 0x08a309Bb97F5b8AFD2a8970c62569615638A838B
-- SnowTrace Link: https://testnet.snowtrace.io/address/0x08a309Bb97F5b8AFD2a8970c62569615638A838B
+- Transaction Hash: 0x11b09cfd0a5ab1bf97ecd7b9c73f0a947d483a2e7a80018b58ed654d1b0a4be9
+- SnowTrace Link: https://testnet.snowtrace.io/address/0x2229F807E89e4AaDc1E201c9A899BA7ab91c1e86
 
 # Introduction
 Create a ERC20 token and deploy it on the Avalanche network for Degen Gaming. The smart contract should have the following functionality:
@@ -32,8 +32,15 @@ Create a ERC20 token and deploy it on the Avalanche network for Degen Gaming. Th
 The transfer function allows the sender to transfer tokens to another address to. It takes two parameters: to, the address of the recipient, and amount, the amount of tokens to be transferred. The require statement checks whether the amount to be transferred is less than or equal to the balance of the msg.sender. If the condition evaluates to false, meaning the sender does not have enough tokens, the function will revert with the error message "Not enough balance to Transfer!". The _transfer function is called to transfer the tokens from the msg.sender to the to address. It moves amount tokens from the msg.sender to to. The function returns true to indicate that the transfer was successful.
 
 
-![image](https://github.com/ShivamGupta92/METACRAFTERS-ETH-AVAX-MODULE-4/assets/70855458/1b26719a-4e76-4136-8a10-17d72a7d6cce)
-![image](https://github.com/ShivamGupta92/METACRAFTERS-ETH-AVAX-MODULE-4/assets/70855458/0b270359-64db-4fe8-bc74-baaf1b4da476)
+![image](https://github.com/ShivamGMeta/Metacrafters_Module_4/assets/149230344/9d05331b-6020-48ff-9e8e-7af5ec86c6d1)
+
+![image](https://github.com/ShivamGMeta/Metacrafters_Module_4/assets/149230344/97e8abb1-fe41-43b3-89cf-f915726f631f) ![image](https://github.com/ShivamGMeta/Metacrafters_Module_4/assets/149230344/d84e9003-f37b-4d2f-9cd5-6bb8a489086e)
+
+
+
+![image](https://github.com/ShivamGMeta/Metacrafters_Module_4/assets/149230344/1f02018c-d3af-4508-af45-da706c88054f)
+
+
 
 # Author
 SHIVAM GUPTA
